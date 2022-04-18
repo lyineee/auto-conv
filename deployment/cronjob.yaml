@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: auto-conv-cronjob
+spec:
+  schedule: "10 0,7,8 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: auto-conv
+              image: lyine/auto-conv:0.1.3
+              env:
+                - name: USERNAME
+                  value: ""
+                - name: PASSWORD
+                  value: ""
+                - name: BARKTOKEN
+                  value: ""
+          restartPolicy: OnFailure

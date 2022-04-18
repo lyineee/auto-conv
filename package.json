@@ -1,0 +1,15 @@
+{
+  "name": "auto-conv",
+  "version": "1.0.0",
+  "description": "auto fill conv table",
+  "main": "index.js",
+  "repository": "github.com/lyineee/auto-conv",
+  "author": "lyineee",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "puppeteer": "^13.5.2"
+  }
+}

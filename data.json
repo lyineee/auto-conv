@@ -1,0 +1,36 @@
+{
+    "type": "complete",
+    "position": {
+        "Q": 35.946670193143,
+        "R": 120.17437771267402,
+        "lng": 120.174378,
+        "lat": 35.94667
+    },
+    "location_type": "html5",
+    "message": "Get ipLocation failed.Get geolocation success.Convert Success.Get address success.",
+    "accuracy": 55,
+    "isConverted": true,
+    "status": 1,
+    "addressComponent": {
+        "citycode": "0532",
+        "adcode": "370211",
+        "businessAreas": [],
+        "neighborhoodType": "",
+        "neighborhood": "",
+        "building": "",
+        "buildingType": "",
+        "street": "长江西路",
+        "streetNumber": "48号",
+        "country": "中国",
+        "province": "山东省",
+        "city": "青岛市",
+        "district": "黄岛区",
+        "towncode": "370211005000",
+        "township": "长江路街道"
+    },
+    "formattedAddress": "山东省青岛市黄岛区长江路街道长江西路中国石油大学(华东)",
+    "roads": [],
+    "crosses": [],
+    "pois": [],
+    "info": "SUCCESS"
+}

@@ -1,0 +1,59 @@
+name: Push go-backend image
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+  # Run tests for any PRs.
+  pull_request:
+
+env:
+  IMAGE_NAME: auto-conv
+  HUB_ID: lyine
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        working-directory: .
+        run: docker build . --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+
+      - name: Log into registry
+        # This is where you will update the PAT to GITHUB_TOKEN
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:latest
+          docker push -a $IMAGE_ID
+
+      - name: Log into docker hub
+        run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u $HUB_ID --password-stdin
+
+      - name: Push to docker hub
+        run: |
+          DOCKER_HUB_IMAGE_ID=${HUB_ID}/$IMAGE_NAME
+          docker tag $IMAGE_NAME $DOCKER_HUB_IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $DOCKER_HUB_IMAGE_ID:latest
+          docker push  $DOCKER_HUB_IMAGE_ID:$VERSION
+          docker push  $DOCKER_HUB_IMAGE_ID:latest
