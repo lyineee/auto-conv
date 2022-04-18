@@ -5,7 +5,7 @@ const defaultBrowserless = "ws://browserless:3000"
 const barkToken = process.env.BARKTOKEN;
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
-const browserless = process.env.BROWSERLESS
+let browserless = process.env.BROWSERLESS
 if (barkToken) {
     console.log('bark notification enable')
 } else {
