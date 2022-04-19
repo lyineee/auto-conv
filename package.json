@@ -10,6 +10,9 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "puppeteer-core": "^13.5.2"
+  },
+  "devDependencies": {
     "puppeteer": "^13.5.2"
   }
 }

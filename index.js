@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const data = require('./data.json');
 const https = require('https')
 const defaultBrowserless = "ws://browserless:3000"
@@ -20,7 +20,7 @@ if (username && password) {
         // const browser = await puppeteer.launch();
         const browser = await puppeteer.connect({
             browserWSEndpoint: browserless,
-        });
+        }).catch(handleError);
         const page = await browser.newPage();
         // login 
         await page.goto('https://app.upc.edu.cn/ncov/wap/default/index').catch(handleError);
@@ -65,6 +65,6 @@ function barkNotification(message, token) {
 }
 
 function handleError(err) {
-    console.error(error)
-    barkNotification(error, barkToken)
+    console.error(err)
+    barkNotification(err, barkToken)
 }
