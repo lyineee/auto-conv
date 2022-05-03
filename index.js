@@ -38,6 +38,7 @@ if (username && password) {
             await page.click('.footers a').catch(handleError)
             // await page.click('.wapcf-btn.wapcf-btn-qx') // click cancel for test
             await page.click('.wapcf-btn.wapcf-btn-ok', { delay: 1000 }).catch(handleError)// TODO is this delay config needed?
+            barkNotification("填写成功", barkToken)
         } else {
             console.log("table has been fill totay")
         }
